@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#94d2bd"> <!-- Her ændres baggrunden -->
+
+    <!-- TOPBAR -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:background="#005f73">
+
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Jamies Mood Tracker"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btnViewHistoryTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historik"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#0a9396"/>
+    </LinearLayout>
+
+    <!-- SCROLLVIEW MED INDHOLD -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvSelectedMood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vælg dit humør"
+                android:textSize="24sp"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:id="@+id/tvDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dato og tid vises her"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- EMOJI KNAPPER PÅ EN RÆKKE -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/btnHappy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😊"
+                    android:textSize="32sp"
+                    android:backgroundTint="#0a9396"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnSad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😢"
+                    android:textSize="32sp"
+                    android:backgroundTint="#0a9396"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btnAngry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="😡"
+                    android:backgroundTint="#0a9396"
+                    android:textSize="32sp"/>
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/etMoodNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Skriv en note om hvorfor..."
+                android:layout_marginTop="24dp"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:gravity="top"
+                android:background="@android:drawable/edit_text" />
+
+            <Button
+                android:id="@+id/btnSaveNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gem note"
+                android:backgroundTint="#0a9396"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

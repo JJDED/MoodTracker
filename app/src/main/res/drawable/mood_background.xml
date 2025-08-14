@@ -1,0 +1,21 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Standard baggrundsfarve (lysegrå) -->
+    <solid android:color="#e9d8a6" />
+
+    <!-- Afrundede hjørner -->
+    <corners android:radius="12dp" />
+
+    <!-- Lidt padding indeni -->
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp" />
+
+    <!-- Let skygge (kun synlig på ældre API-versioner) -->
+    <stroke
+        android:width="1dp"
+        android:color="#BDBDBD" />
+</shape>
