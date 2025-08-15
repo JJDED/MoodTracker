@@ -9,14 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
+/**
+ * Adapter til at forbinde en liste af MoodEntry-objekter
+ * med RecyclerView, så de kan vises på skærmen.
+ */
 public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder> {
 
-    private ArrayList<MoodEntry> moodList;
+    private ArrayList<MoodEntry> moodList; // Liste med gemte humørregistreringer
 
+    // Modtager listen med humørdata, når adapteren oprettes
     public MoodAdapter(ArrayList<MoodEntry> moodList) {
         this.moodList = moodList;
     }
 
+    /**
+     * Opretter en ViewHolder ved at "inflatte" layoutet item_mood.xml
+     */
     @NonNull
     @Override
     public MoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,15 +33,19 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
         return new MoodViewHolder(v);
     }
 
+    /**
+     * Binder data fra et MoodEntry-objekt til elementerne i ViewHolder.
+     */
     @Override
     public void onBindViewHolder(@NonNull MoodViewHolder holder, int position) {
-        MoodEntry entry = moodList.get(position);
+        MoodEntry entry = moodList.get(position); // Henter ét humør fra listen
 
+        // Viser tidspunkt, humør-ikon og note
         holder.tvDateTime.setText(entry.dateTime);
         holder.tvMood.setText(entry.mood);
         holder.tvNote.setText(entry.note);
 
-        // Farvekoder baseret på humør
+        // Skifter baggrundsfarve afhængigt af humøret
         switch (entry.mood) {
             case "😀":
                 holder.itemView.setBackgroundColor(Color.parseColor("#C8E6C9")); // grønlig
@@ -49,11 +61,17 @@ public class MoodAdapter extends RecyclerView.Adapter<MoodAdapter.MoodViewHolder
         }
     }
 
+    /**
+     * Returnerer hvor mange elementer der er i listen.
+     */
     @Override
     public int getItemCount() {
         return moodList.size();
     }
 
+    /**
+     * ViewHolder der holder referencer til UI-elementerne i item_mood.xml
+     */
     public static class MoodViewHolder extends RecyclerView.ViewHolder {
         TextView tvDateTime, tvMood, tvNote;
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
+    // Navn på SharedPreferences filen og nøglen til historik
     private static final String PREFS_NAME = "MoodPrefs";
     private static final String KEY_HISTORY = "history";
 
@@ -29,29 +30,31 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("HistoryActivity", "onCreate called");
 
+        // Indsætter layoutet activity_history.xml
         setContentView(R.layout.activity_history);
         Log.d("HistoryActivity", "Layout set: activity_history");
 
-        // Find UI-elementer
+        // Finder knapper og listevisning i layoutet
         btnBack = findViewById(R.id.btnBack);
         btnShowGraph = findViewById(R.id.btnShowGraph);
         recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
         Log.d("HistoryActivity", "UI elements initialized");
 
+        // Sætter layoutmanager til RecyclerView (lodret liste)
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
         Log.d("HistoryActivity", "RecyclerView layout manager set");
 
-        // Load historik
+        // Indlæser og viser gemt historik
         loadAndShowHistory();
         Log.d("HistoryActivity", "History loaded");
 
-        // Tilbage-knap
+        // Tilbage-knap lukker denne aktivitet
         btnBack.setOnClickListener(v -> {
             Log.d("HistoryActivity", "Back button clicked");
             finish();
         });
 
-        // Vis graf-knap
+        // "Vis graf"-knap åbner GraphActivity
         btnShowGraph.setOnClickListener(v -> {
             Log.d("HistoryActivity", "Show Graph button clicked");
             Intent intent = new Intent(HistoryActivity.this, GraphActivity.class);
@@ -59,15 +62,21 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Indlæser gemt humørhistorik fra SharedPreferences
+     * og viser den i RecyclerView via MoodAdapter.
+     */
     private void loadAndShowHistory() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String json = prefs.getString(KEY_HISTORY, null);
+
         if (json != null) {
+            // Konverterer JSON til ArrayList<MoodEntry>
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<MoodEntry>>() {}.getType();
             ArrayList<MoodEntry> historyList = gson.fromJson(json, type);
 
+            // Sætter adapteren på RecyclerView for at vise listen
             MoodAdapter adapter = new MoodAdapter(historyList);
             recyclerViewHistory.setAdapter(adapter);
         }
