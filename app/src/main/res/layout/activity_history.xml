@@ -22,15 +22,21 @@
             android:textColor="#FFFFFF"
             android:backgroundTint="#0a9396" />
 
+        <!-- Spacer to push Vis graf to the right -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
         <Button
             android:id="@+id/btnShowGraph"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#0a9396"
-            android:layout_marginLeft="200dp"
             android:text="Vis graf"
             android:textColor="#FFFFFF" />
     </LinearLayout>
+
 
     <!-- Historikliste -->
     <androidx.recyclerview.widget.RecyclerView

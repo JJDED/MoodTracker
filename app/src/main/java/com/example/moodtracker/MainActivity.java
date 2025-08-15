@@ -3,7 +3,9 @@ package com.example.moodtracker;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MainActivity", "onCreate called");
+
         setContentView(R.layout.activity_main);
+        Log.d("MainActivity", "Layout set: activity_main");
 
         tvSelectedMood = findViewById(R.id.tvSelectedMood);
         tvDateTime = findViewById(R.id.tvDateTime);
@@ -46,37 +51,47 @@ public class MainActivity extends AppCompatActivity {
 
         // NYT: Topbar knap
         btnViewHistoryTop = findViewById(R.id.btnViewHistoryTop);
+        Log.d("MainActivity", "UI elements initialized");
 
         updateDateTime();
+        Log.d("MainActivity", "Date/time updated");
+
         loadHistory();
+        Log.d("MainActivity", "History loaded. Items: " + historyList.size());
 
         btnHappy.setOnClickListener(v -> {
             selectedMood = "😊";
             tvSelectedMood.setText("Dit humør: " + selectedMood);
             updateDateTime();
+            Log.d("MainActivity", "Mood selected: Happy");
         });
 
         btnSad.setOnClickListener(v -> {
             selectedMood = "😢";
             tvSelectedMood.setText("Dit humør: " + selectedMood);
             updateDateTime();
+            Log.d("MainActivity", "Mood selected: Sad");
         });
 
         btnAngry.setOnClickListener(v -> {
             selectedMood = "😡";
             tvSelectedMood.setText("Dit humør: " + selectedMood);
             updateDateTime();
+            Log.d("MainActivity", "Mood selected: Angry");
         });
 
         btnSaveNote.setOnClickListener(v -> {
             String note = etMoodNote.getText().toString().trim();
+            Log.d("MainActivity", "Save button clicked. Note: " + note);
 
             if (selectedMood.isEmpty()) {
+                Log.d("MainActivity", "Save failed - No mood selected");
                 Toast.makeText(MainActivity.this, "Vælg et humør først", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (note.isEmpty()) {
+                Log.d("MainActivity", "Save failed - Note is empty");
                 Toast.makeText(MainActivity.this, "Skriv en note", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -86,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             historyList.add(entry);
             saveHistory();
+            Log.d("MainActivity", "Mood entry saved: " + selectedMood + " - " + note + " - " + dateTime);
 
             Toast.makeText(MainActivity.this,
                     "Gemt: " + selectedMood + " - " + note + "\n" + dateTime,
@@ -95,10 +111,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // NYT: Topbar knap åbner historik
-        btnViewHistoryTop.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, HistoryActivity.class))
-        );
+        btnViewHistoryTop.setOnClickListener(v -> {
+            Log.d("MainActivity", "View History button clicked");
+            startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+        });
+
+        Button btnHelp = findViewById(R.id.btnHelp);
+
+        btnHelp.setOnClickListener(v -> {
+            String url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+
     }
+
 
     private void updateDateTime() {
         String currentDateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault())

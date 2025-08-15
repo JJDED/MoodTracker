@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -50,12 +51,16 @@ public class GraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        // Log for debugging
+        Log.d("GraphActivity", "onCreate called - setting up graph view");
+
         Button btnBack = findViewById(R.id.btnBackToHistory);
         btnBack.setOnClickListener(v -> finish());
 
         FrameLayout container = findViewById(R.id.graphContainer);
         container.addView(new GraphView(this));
     }
+
 
     private class GraphView extends View {
         private final Paint barPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -97,7 +102,11 @@ public class GraphActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
+            // Log when drawing starts
+            Log.d("GraphView", "onDraw called - moodCount size: " + moodCount.size());
+
             if (moodCount.isEmpty()) {
+                Log.d("GraphView", "No data to display - drawing 'Ingen data at vise'");
                 textPaint.setTextSize(50f);
                 canvas.drawText("Ingen data at vise", 50, 100, textPaint);
                 return;
@@ -105,18 +114,21 @@ public class GraphActivity extends AppCompatActivity {
 
             int width = getWidth();
             int height = getHeight();
+            Log.d("GraphView", "Canvas size: width=" + width + ", height=" + height);
 
             int n = moodCount.size();
-            int barWidth = Math.max(60, width / Math.max(1, n * 2));  // bredde pr. søjle
-            int spacing = Math.max(20, barWidth / 3);                  // mellemrum inde i “slotten”
-            int x = barWidth;                                          // start-x
+            int barWidth = Math.max(60, width / Math.max(1, n * 2));
+            int spacing = Math.max(20, barWidth / 3);
+            int x = barWidth;
             int bottom = height - 100;
 
             for (Map.Entry<String, Integer> entry : moodCount.entrySet()) {
                 String labelRaw = entry.getKey();
                 int count = entry.getValue();
 
-                // Vælg farve (robust match + fallback palette)
+                Log.d("GraphView", "Drawing mood: " + labelRaw + " with count: " + count);
+
+                // Vælg farve
                 barPaint.setColor(getColorForMood(labelRaw));
 
                 int barHeight = (int) ((count / (float) maxCount) * (height - 220));
@@ -136,7 +148,11 @@ public class GraphActivity extends AppCompatActivity {
 
                 x += barWidth * 2;
             }
+
+            // Log when drawing ends
+            Log.d("GraphView", "Finished drawing graph");
         }
+
     }
 
     // --- Hjælpefunktioner til farvevalg ---

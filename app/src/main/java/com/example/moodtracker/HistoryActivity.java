@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.google.gson.Gson;
@@ -26,27 +27,38 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("HistoryActivity", "onCreate called");
+
         setContentView(R.layout.activity_history);
+        Log.d("HistoryActivity", "Layout set: activity_history");
 
         // Find UI-elementer
         btnBack = findViewById(R.id.btnBack);
         btnShowGraph = findViewById(R.id.btnShowGraph);
         recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
+        Log.d("HistoryActivity", "UI elements initialized");
 
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        Log.d("HistoryActivity", "RecyclerView layout manager set");
 
         // Load historik
         loadAndShowHistory();
+        Log.d("HistoryActivity", "History loaded");
 
         // Tilbage-knap
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> {
+            Log.d("HistoryActivity", "Back button clicked");
+            finish();
+        });
 
         // Vis graf-knap
         btnShowGraph.setOnClickListener(v -> {
+            Log.d("HistoryActivity", "Show Graph button clicked");
             Intent intent = new Intent(HistoryActivity.this, GraphActivity.class);
             startActivity(intent);
         });
     }
+
 
     private void loadAndShowHistory() {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
